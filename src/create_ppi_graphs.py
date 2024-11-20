@@ -8,27 +8,29 @@
 #     tar.extractall()  # Extracts to the current directory
 #     print("Extraction completed.")
 
+
 import networkx as nx
 import json
 import pandas as pd
+import os
 
-with open('ppi/ppi-G.json', 'r') as file:
+os.makedirs("data/graphs/graphml", exist_ok=True)
+os.makedirs("data/graphs/edge_lists", exist_ok=True)
+
+with open('data/ppi/ppi-G.json', 'r') as file:
     ppi_graph = json.load(file)
 
 print(ppi_graph.keys())
 
 G = nx.Graph()
-# Add nodes with attributes if present
 for node in ppi_graph['nodes']:
-    node_id = node.get('id')  # Assuming each node has an 'id' field
-    G.add_node(node_id, **node)  # Add all node attributes as a dictionary
+    node_id = node.get('id')
+    G.add_node(node_id, **node)
 
-# Add edges
 for link in ppi_graph['links']:
-    source = link.get('source')  # Assuming 'source' field for starting node
-    target = link.get('target')  # Assuming 'target' field for ending node
-    G.add_edge(source, target, **link)  # Add all edge attributes as a dictionary
-
+    source = link.get('source')
+    target = link.get('target')
+    G.add_edge(source, target, **link)
 
 print("Number of nodes:", G.number_of_nodes())
 print("Number of edges:", G.number_of_edges())
@@ -38,32 +40,20 @@ print("Is the graph connected?", nx.is_connected(G))
 num_components = nx.number_connected_components(G)
 print("Number of connected components:", num_components)
 
-# components = list(nx.connected_components(G))
+components = list(nx.connected_components(G))
 
-# small_components = [c for c in components if len(c) < 100]
+small_components = [c for c in components if len(c) < 100]
 
-# # Remove nodes in small components from the graph
-# for component in small_components:
-#     G.remove_nodes_from(component)
-
-# # print("Removed all components with fewer than 30 nodes.")
-
-# num_components = nx.number_connected_components(G)
-# print("Number of connected components:", num_components)
-
-# nx.write_graphml(G, "ppi_network.graphml")
+# Remove nodes in small components from the graph
+for component in small_components:
+    G.remove_nodes_from(component)
 
 
-# nodes_data = pd.DataFrame(G.nodes(data=True))
-# nodes_data.columns = ['Node', 'Attributes']
-# attributes_df = nodes_data['Attributes'].apply(pd.Series)
-# result_df = pd.concat([nodes_data['Node'], attributes_df], axis=1)
-# result_df.to_csv("nodes.csv", index=False)
+num_components = nx.number_connected_components(G)
+print("Number of connected components:", num_components)
 
-# edges_data = pd.DataFrame(G.edges(data=True))
-# edges_data.columns = ['Source', 'Target', 'Attributes']
-# edges_data = edges_data.drop(columns=["Attributes"])
-# edges_data.to_csv("edges.csv", index=False)
+nx.write_graphml(G, "data/ppi_network.graphml")
+
 
 components = list(nx.connected_components(G))
 

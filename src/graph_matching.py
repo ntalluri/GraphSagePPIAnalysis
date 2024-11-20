@@ -2,6 +2,7 @@ import networkx as nx
 import pandas as pd
 import os
 from pathlib import Path
+import numpy as np
 
 def load_graph(file_path):
     return nx.read_edgelist(file_path, delimiter="\t")
@@ -9,14 +10,14 @@ def load_graph(file_path):
     
 def compare_graphs(graph1, graph2):
     # compare nodes
-    # if graph1.number_of_nodes() != graph2.number_of_nodes():
-    #     return False
+    if graph1.number_of_nodes() != graph2.number_of_nodes():
+        return False
 
-    # compare edges
+    # # compare edges
     # if graph1.number_of_edges() != graph2.number_of_edges():
     #     return False
     
-    # compare degree
+    # # compare degree
     # degree_seq1 = sorted([d for _, d in graph1.degree()])
     # degree_seq2 = sorted([d for _, d in graph2.degree()])
     # if degree_seq1 != degree_seq2:
@@ -43,7 +44,6 @@ def find_matching_graphs(folder1, folder2):
         print(f"Processed {graph_file2.name}")
     print(f"Loaded {len(graph2_dict)} graph2 files.")
 
-
     for graph_file1 in folder1.glob("*.edgelist"): 
         graph1 = load_graph(graph_file1)
         print(f"Processed {graph_file1.name}")
@@ -52,10 +52,9 @@ def find_matching_graphs(folder1, folder2):
             if compare_graphs(graph1, graph2):
                 print(f"{graph_file1.name} and {graph2_name} match")
                 match_dict[graph_file1.name].append(graph2_name)
-        
+    
     return match_dict
 
-# Example usage
 folder1_path = "data/bio-tissue-networks"
 folder2_path = "data/graphs/edge_lists"
 matches = find_matching_graphs(folder1_path, folder2_path)

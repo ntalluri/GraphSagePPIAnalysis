@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key id="d4" for="edge" attr.name="target" attr.type="long"/>
+<key id="d3" for="edge" attr.name="source" attr.type="long"/>
+<key id="d2" for="node" attr.name="val" attr.type="boolean"/>
+<key id="d1" for="node" attr.name="id" attr.type="long"/>
+<key id="d0" for="node" attr.name="test" attr.type="boolean"/>
+<graph edgedefault="undirected"><node id="49865">
+  <data key="d0">False</data>
+  <data key="d1">49865</data>
+  <data key="d2">True</data>
+</node>
+<node id="50306">
+  <data key="d0">False</data>
+  <data key="d1">50306</data>
+  <data key="d2">True</data>
+</node>
+<edge source="49865" target="49865">
+  <data key="d3">49865</data>
+  <data key="d4">49865</data>
+</edge>
+<edge source="49865" target="50306">
+  <data key="d3">49865</data>
+  <data key="d4">50306</data>
+</edge>
+<edge source="50306" target="50306">
+  <data key="d3">50306</data>
+  <data key="d4">50306</data>
+</edge>
+</graph></graphml>

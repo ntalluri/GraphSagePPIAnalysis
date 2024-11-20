@@ -48,7 +48,6 @@ small_components = [c for c in components if len(c) < 100]
 for component in small_components:
     G.remove_nodes_from(component)
 
-
 num_components = nx.number_connected_components(G)
 print("Number of connected components:", num_components)
 

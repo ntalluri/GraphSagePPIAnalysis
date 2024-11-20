@@ -1,7 +1,6 @@
-graph_matches.txt
 data/bio-tissue-networks/
 data/bio-tissue-hierarchy/
-data/graphs
-data/graphs/edge_lists/
-data/graphs/graphml/
+data/graphs/
+data/ppi_network.graphml
 *.DS_Store
+graph_matches.txt

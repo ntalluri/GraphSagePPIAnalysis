@@ -65,3 +65,5 @@ with open("graph_matches.txt", "w") as f:
         f.write(f"{graph1} matches with: {match_str}\n")
 
 print("Matching graphs saved to graph_matches.txt")
+
+# this will give back no matching because the graphs are different due to the missing 1-2 node disconnected components, please use graph_pattern_matching.py

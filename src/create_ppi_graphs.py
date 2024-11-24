@@ -1,14 +1,3 @@
-# import tarfile
-
-# # Path to the tar.gz file
-# file_path = 'bio-tissue-networks.tar.gz'
-
-# # Open and extract the contents of the file
-# with tarfile.open(file_path, 'r:gz') as tar:
-#     tar.extractall()  # Extracts to the current directory
-#     print("Extraction completed.")
-
-
 import networkx as nx
 import json
 import pandas as pd

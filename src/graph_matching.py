@@ -13,15 +13,15 @@ def compare_graphs(graph1, graph2):
     if graph1.number_of_nodes() != graph2.number_of_nodes():
         return False
 
-    # # compare edges
-    # if graph1.number_of_edges() != graph2.number_of_edges():
-    #     return False
+    # compare edges
+    if graph1.number_of_edges() != graph2.number_of_edges():
+        return False
     
-    # # compare degree
-    # degree_seq1 = sorted([d for _, d in graph1.degree()])
-    # degree_seq2 = sorted([d for _, d in graph2.degree()])
-    # if degree_seq1 != degree_seq2:
-    #     return False
+    # compare degree
+    degree_seq1 = sorted([d for _, d in graph1.degree()])
+    degree_seq2 = sorted([d for _, d in graph2.degree()])
+    if degree_seq1 != degree_seq2:
+        return False
 
     # compare graph structure
     if not nx.is_isomorphic(graph1, graph2):
@@ -55,15 +55,16 @@ def find_matching_graphs(folder1, folder2):
     
     return match_dict
 
-folder1_path = "data/bio-tissue-networks"
+folder1_path = "data/bio-tissue-networks-clean"
 folder2_path = "data/graphs/edge_lists"
 matches = find_matching_graphs(folder1_path, folder2_path)
 
+filtered_matches = {graph1: matching_graphs for graph1, matching_graphs in matches.items() if matching_graphs}
 with open("graph_matches.txt", "w") as f:
-    for graph1, matching_graphs in matches.items():
-        match_str = ", ".join(matching_graphs) if matching_graphs else "No matches"
+    for graph1, matching_graphs in filtered_matches.items():
+        match_str = ", ".join(matching_graphs) # if matching_graphs else None
         f.write(f"{graph1} matches with: {match_str}\n")
 
 print("Matching graphs saved to graph_matches.txt")
 
-# this will give back no matching because the graphs are different due to the missing 1-2 node disconnected components, please use graph_pattern_matching.py
+# this will give back no matching if the non cleaned ohmnet graphs are used because the graphs are different due to the missing 1/2 node disconnected components, please use graph_pattern_matching.py otherwise

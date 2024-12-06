@@ -22,7 +22,7 @@ folder1_path = "data/bio-tissue-networks"
 folder2_path = "data/bio-tissue-networks-clean" 
 folder3_path = "data/graphs/edge_lists"
 
-# check that the bio tissue networks are connected, otherwise save the largest component part of the network
+# check that the ohment bio tissue networks are connected, otherwise save the largest component part of the network
 folder1 = Path(folder1_path)
 for graph_file1 in folder1.glob("*.edgelist"): 
     graph1 = load_graph(graph_file1)
@@ -39,7 +39,7 @@ for graph_file1 in folder1.glob("*.edgelist"):
                 edgelist_filename = f"data/bio-tissue-networks-clean/{name}"
                 nx.write_edgelist(component_subgraph, edgelist_filename, data=False, delimiter="\t")
 
-# checking the bio tissue networks are connected after "cleaning"
+# checking the ohmnet bio tissue networks are connected after "cleaning"
 folder2 = Path(folder2_path)
 for graph_file2 in folder2.glob("*.edgelist"): 
     graph2 = load_graph(graph_file2)

@@ -5,3 +5,5 @@ bio-tissue-labels/
 graphs/*
 *.DS_Store
 ppi/
+raw/
+processed/

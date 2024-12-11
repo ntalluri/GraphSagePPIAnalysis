@@ -100,7 +100,7 @@ print("New Split of Dataset")
 splits = reorder_graphs([5, 12, 1, 8, 4, 20, 3, 14, 10, 18, 22, 11, 7, 2, 21, 13, 0, 6, 15, 9, 19, 17, 23, 16])
 
 # model and dataloader
-# Params: {'hidden_channels': 512, 'num_layers': 2, 'dropout': 0.1, 'aggr': 'mean', 'normalize': False}
+# {'hidden_channels': 512, 'num_layers': 2, 'dropout': 0.1, 'aggr': 'mean', 'normalize': False, 'batch': 1}
 in_channels = 50   # each node has 50 features
 hidden_channels = 512
 out_channels = 121  #  121 possible classes per node
@@ -112,7 +112,7 @@ aggr = 'mean'
 model = GraphSAGE(in_channels, hidden_channels, num_layers, out_channels, aggr=aggr, normalize=normalize)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
-train_loader = DataLoader(splits['train'], batch_size=2, shuffle=True)
+train_loader = DataLoader(splits['train'], batch_size=1, shuffle=True)
 val_loader = DataLoader(splits['val'], batch_size=1, shuffle=False)
 test_loader = DataLoader(splits['test'], batch_size=1, shuffle=False)
 
@@ -178,12 +178,12 @@ test_dataset = PPI(root="data", split="test")
 
 # create dataloaders and model
 train_loader = DataLoader(train_dataset, batch_size=1, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=2, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
+val_loader = DataLoader(val_dataset, batch_size=1, shuffle=False)
+test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
-# Params: {'hidden_channels': 256, 'num_layers': 2, 'dropout': 0.1, 'aggr': 'mean', 'normalize': False}
+# Params: {'hidden_channels': 512, 'num_layers': 2, 'dropout': 0.1, 'aggr': 'mean', 'normalize': False, 'batch': 1}
 in_channels = 50   # for PPI dataset, typically each node has 50 features.
-hidden_channels = 256
+hidden_channels = 512
 out_channels = 121  # PPI dataset has 121 possible classes per node
 num_layers = 2
 dropout = 0.1

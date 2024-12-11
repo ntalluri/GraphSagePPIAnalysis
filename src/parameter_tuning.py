@@ -97,20 +97,7 @@ def reorder_graphs(indices):
 
 # create new splits using your indices
 # splits = reorder_graphs(result['selected_indices'])
-# splits = reorder_graphs([5, 12, 1, 8, 4, 20, 3, 14, 10, 18, 22, 11, 7, 2, 21, 13, 0, 6, 15, 9, 19, 17, 23, 16])
 
-# noraml dataset
-train_loader = DataLoader(splits['train'], batch_size=2, shuffle=True)
-val_loader = DataLoader(splits['val'], batch_size=1, shuffle=False)
-test_loader = DataLoader(splits['test'], batch_size=1, shuffle=False)
-
-# norm split
-train_dataset = PPI(root="data", split="train")
-val_dataset = PPI(root="data", split="val")
-test_dataset = PPI(root="data", split="test")
-train_loader = DataLoader(train_dataset, batch_size=1, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=2, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
 
 def grid_search_graphsage():
     # define parameter grid
@@ -119,18 +106,35 @@ def grid_search_graphsage():
         'num_layers': [1, 2, 3, 4],
         'dropout': [0.1, 0.3, 0.5, 0.7],
         'aggr': ['mean', 'max'],
-        'normalize': [True, False]
+        'normalize': [True, False],
+        'batch': [1,2]
     }
-    
-    # generate all combinations
+
+     # generate all combinations
     param_combinations = [dict(zip(param_grid.keys(), v)) for v in product(*param_grid.values())]
     best_score = 0
     best_params = None
     results = []
+
     
     for params in param_combinations:
         start_time = time.time()
         print(f"Params: {params}")
+        
+        # # noraml dataset
+        # splits = reorder_graphs([5, 12, 1, 8, 4, 20, 3, 14, 10, 18, 22, 11, 7, 2, 21, 13, 0, 6, 15, 9, 19, 17, 23, 16])
+        # train_loader = DataLoader(splits['train'], batch_size=params['batch'], shuffle=True)
+        # val_loader = DataLoader(splits['val'], batch_size=params['batch'], shuffle=False)
+        # test_loader = DataLoader(splits['test'], batch_size=params['batch'], shuffle=False)
+
+        # norm split
+        train_dataset = PPI(root="data", split="train")
+        val_dataset = PPI(root="data", split="val")
+        test_dataset = PPI(root="data", split="test")
+        train_loader = DataLoader(train_dataset, batch_size=params['batch'], shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=params['batch'], shuffle=False)
+        test_loader = DataLoader(test_dataset, batch_size=params['batch'], shuffle=False)
+       
         # Initialize model with current parameters
         model = GraphSAGE(
             in_channels=50,
